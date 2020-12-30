@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>2020年度总结</title>
+    <link href="/2020/12/30/summary-2020/"/>
+    <url>/2020/12/30/summary-2020/</url>
+    
+    <content type="html"><![CDATA[<div class="note note-info">            <p>时间如白驹过隙，2020就这样悄悄溜走了，些许感叹！第一次这么正式地写年度总结，还是挺紧张的，主要还是因为自己在这一年做的事情太少，还是好好回忆下，写点东西。</p>          </div><h2 id="干了些什么？"><a href="#干了些什么？" class="headerlink" title="干了些什么？"></a>干了些什么？</h2><div>            <input type="checkbox" disabled checked="checked">基于React Hooks && Antd UI搭建了博客前台          </div><div>            <input type="checkbox" disabled checked="checked">基于React && Node && Antd搭建了博客后台          </div><div>            <input type="checkbox" disabled checked="checked">基于Node && Express && Mongoose搭建了博客中台          </div><div>            <input type="checkbox" disabled checked="checked">写了26篇很水的博客          </div><div>            <input type="checkbox" disabled checked="checked">基于hexo && fluid主题搭建博客，并且博客迁移          </div>]]></content>
+    
+    
+    <categories>
+      
+      <category>总结</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>总结</tag>
+      
+      <tag>2020</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello Fluid !</title>
     <link href="/2020/12/17/hello-fluid/"/>
     <url>/2020/12/17/hello-fluid/</url>
