@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>ES6中Reduce使用</title>
+    <link href="/2021/01/12/es6-reduce-use/"/>
+    <url>/2021/01/12/es6-reduce-use/</url>
+    
+    <content type="html"><![CDATA[<div class="note note-info">            <p>什么？还不会<code>reduce</code>，那你可能要多写很多代码 =_=!!</p>          </div><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于新手来说，<code>reduce</code>没有<code>map</code>、<code>forEach</code>、<code>filter</code>等数组方法那么友好。但是不得不说，它们能干的事情，<code>reduce</code>一个不落下，直呼“B神”。</p><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h2 id="重塑"><a href="#重塑" class="headerlink" title="重塑"></a>重塑</h2><h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Javascript</tag>
+      
+      <tag>ES6</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>防抖和节流</title>
     <link href="/2021/01/06/debounce-and-throttle/"/>
     <url>/2021/01/06/debounce-and-throttle/</url>
