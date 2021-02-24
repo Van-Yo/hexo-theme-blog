@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2 字
+      450 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      4
        分钟
     </span>
   
@@ -227,7 +227,24 @@
             <h1 style="display: none">前后端数据交互加密</h1>
             
             <div class="markdown-body">
-              <h2 id="AES-RSA"><a href="#AES-RSA" class="headerlink" title="AES+RSA"></a>AES+RSA</h2>
+              <div class="note note-info">
+            <p>在前后端分离的项目中，往往需要传输一些敏感的信息，例如密码、金额等，签名验签算法只能保证数据不被篡改，但是却无法对数据进行保密，如果用户输入的密码明文传输，就会被网络中的节点截获，虽然大部分网络运营商并不会去截取网络传输的内容，但是不能排除用户连接的WiFi网络是不是钓鱼网络，所以在传输敏感信息的时候需要加密，本文就讨论如何安全的让客户端和服务器交换秘钥。</p>
+          </div>
+
+<h2 id="AES-RSA"><a href="#AES-RSA" class="headerlink" title="AES+RSA"></a>AES+RSA</h2><h3 id="简单介绍一下AES和RSA"><a href="#简单介绍一下AES和RSA" class="headerlink" title="简单介绍一下AES和RSA"></a>简单介绍一下AES和RSA</h3><ul>
+<li><code>AES</code>：<code>对称加解密</code>，加密解密使用<code>同一个秘钥</code>。</li>
+<li><code>RSA</code>：<code>非对称加解密</code>，使用<code>公钥加密</code>数据，只有对应的<code>私钥</code>才能<code>解密</code>，加密方和解密方各自保存秘钥对中的一个。</li>
+</ul>
+<h3 id="为什么前后端交互要结合AES和RSA"><a href="#为什么前后端交互要结合AES和RSA" class="headerlink" title="为什么前后端交互要结合AES和RSA"></a>为什么前后端交互要结合AES和RSA</h3><ol>
+<li>如果只用<code>AES</code><br><code>前端</code>要加密数据，就需要保存<code>秘钥</code>，我们知道保存在<code>前端</code>的东西都不是秘密，秘钥<code>泄露</code>后，拿到<code>秘钥</code>和加密后的数据，就可以解密，加密毫无意义。</li>
+<li>如果只用<code>RSA</code><br>前端只保存<code>秘钥</code>对中的一个，即使<code>泄露</code>，也无法<code>解密</code>数据，解决了<code>AES</code>的问题。但是<code>RSA</code>效率低，每次交互都进行<code>加解密</code>，对<code>性能</code>影响较大。</li>
+</ol>
+<blockquote>
+<p>结合使用：<code>AES</code>加密数据，<code>RSA</code>加密<code>秘钥</code>。<code>AES</code>的<code>秘钥</code>动态生成，避免了<code>前端</code>保存<code>秘钥</code>导致泄露的可能，<code>RSA</code>对<code>秘钥</code>加密，保证<code>秘钥</code>传输过程的安全。最终提交到后端的数据是：<code>AES加密后的数据</code> + <code>RSA加密后的秘钥</code></p>
+</blockquote>
+<h3 id="图例"><a href="#图例" class="headerlink" title="图例"></a>图例</h3><div align=center>
+    <img src="aes-rsa.jpg" srcset="/img/loading.gif" />
+</div>
             </div>
             <hr>
             <div>
