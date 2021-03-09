@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Revan">
   <meta name="keywords" content="">
-  <title>Js基础知识加强排 - Revan&#39;s Blog</title>
+  <title>Js中关于this、apply、call、bind的深入探讨 - Revan&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -162,7 +162,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Js基础知识加强排">
+            <span class="h2" id="subtitle" title="Js中关于this、apply、call、bind的深入探讨">
               
             </span>
 
@@ -172,8 +172,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-03 15:47" pubdate>
-        2021年3月3日 下午
+      <time datetime="2021-03-09 16:49" pubdate>
+        2021年3月9日 下午
       </time>
     </span>
   
@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      404 字
+      549 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      6
        分钟
     </span>
   
@@ -224,36 +224,35 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Js基础知识加强排</h1>
+            <h1 style="display: none">Js中关于this、apply、call、bind的深入探讨</h1>
             
             <div class="markdown-body">
-              <h2 id="手写代码"><a href="#手写代码" class="headerlink" title="手写代码"></a>手写代码</h2><h3 id="实现函数能够深度克隆基本类型"><a href="#实现函数能够深度克隆基本类型" class="headerlink" title="实现函数能够深度克隆基本类型"></a>实现函数能够深度克隆基本类型</h3><p><code>JS</code> 中的<code>浅拷贝</code>与<code>深拷贝</code>，只是针对复杂数据类型（<code>Object</code>，<code>Array</code>）的复制问题。<code>浅拷贝</code>与<code>深拷贝</code>都可以实现在已有对象上再生出一份的作用。但是对象的实例是存储在<code>堆内存</code>中然后通过一个<code>引用值</code>去操作对象，由此拷贝的时候就存在两种情况了：<code>拷贝引用</code>和<code>拷贝实例</code>，这也是<code>浅拷贝</code>和<code>深拷贝</code>的区别。注：有的数组自带方法是局限性的，例如<code>slice()</code>、<code>concat()</code>，仅适用于对不包含引用对象的<code>一维数组</code>的深拷贝。</p>
-<p><strong>数组的深拷贝</strong></p>
-<ul>
-<li><code>slice()</code>（有上述局限）</li>
-<li><code>concat()</code>（有上述局限）</li>
-<li><code>扩展运算符</code>（有上述局限）</li>
-</ul>
-<p><strong>对象的深拷贝</strong></p>
-<ul>
-<li>利用 <code>JSON</code> 对象中的 <code>parse</code> 和 <code>stringify</code></li>
-<li>扩展运算符（有上述局限）</li>
-<li>利用<code>递归</code>来实现每一层都重新创建对象并赋值</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deepCopy</span>(<span class="hljs-params">obj</span>) </span>&#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> obj === <span class="hljs-string">&#x27;object&#x27;</span>) &#123;<br>    <span class="hljs-keyword">var</span> result = obj.constructor === <span class="hljs-built_in">Array</span> ? [] : &#123;&#125;;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> obj) &#123;<br>      result[i] = <span class="hljs-keyword">typeof</span> obj[i] === <span class="hljs-string">&#x27;object&#x27;</span> ? deepCopy(obj[i]) : obj[i];<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">var</span> result = obj;<br>  &#125;<br>  <br>  <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+              <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><div class="note note-info">
+            <p>这又是一个面试经典问题~/(ㄒoㄒ)/~~也是 <code>ES5</code> 中众多坑中的一个，在 <code>ES6</code> 中可能会极大避免 <code>this</code> 产生的错误，但是为了一些老代码的维护，最好还是了解一下 <code>this</code> 的指向和 <code>call</code>、<code>apply</code>、<code>bind</code> 三者的区别。</p>
+          </div>
 
-<h3 id="函数中的arguments是数组吗？类数组转数组的方法了解一下？"><a href="#函数中的arguments是数组吗？类数组转数组的方法了解一下？" class="headerlink" title="函数中的arguments是数组吗？类数组转数组的方法了解一下？"></a>函数中的arguments是数组吗？类数组转数组的方法了解一下？</h3><p>函数中的<code>arguments</code>是类数组:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">info</span>(<span class="hljs-params">name,age,address</span>)</span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">arguments</span><br>&#125;<br><span class="hljs-keyword">let</span> arg = info(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)<br><span class="hljs-built_in">console</span>.log(arg);<br></code></pre></td></tr></table></figure>
-<p>结果：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>    <span class="hljs-number">0</span>:<span class="hljs-number">1</span>,<br>    <span class="hljs-number">1</span>:<span class="hljs-number">2</span>,<br>    <span class="hljs-number">2</span>:<span class="hljs-number">3</span>,<br>    length:<span class="hljs-number">3</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>类数组转数组的方法：</p>
-<ul>
-<li>扩展运算符</li>
-<li><code>Array.from</code></li>
-<li><code>Array.prototype.slice.apply(arguments)</code></li>
-</ul>
-<h3 id="原型、原型链、继承"><a href="#原型、原型链、继承" class="headerlink" title="原型、原型链、继承"></a>原型、原型链、继承</h3><p>详见<a href="https://van-yo.github.io/2021/03/05/js-prototype/">JavaScript深入之从原型到原型链到继承</a></p>
-
+<h2 id="this-的指向"><a href="#this-的指向" class="headerlink" title="this 的指向"></a>this 的指向</h2><p>在 <code>ES5</code> 中，其实 <code>this</code> 的指向，始终坚持一个原理：<strong>this 永远指向最后调用它所在函数的那个对象</strong>。</p>
+<p>举个栗子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> a = &#123;<br>    name: <span class="hljs-string">&quot;Cherry&quot;</span>,<br>    fn : <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.name);      <span class="hljs-comment">// Cherry</span><br>    &#125;<br>&#125;<br>a.fn();<br></code></pre></td></tr></table></figure>
+<p>用上面这个栗子来解释原理：<code>this</code>在<code>fn</code>函数中，<code>fn</code>函数被调用，而调用它的对象是<code>a</code>，所以<code>this</code>指向对象<code>a</code>。</p>
+<p>接下来利用几种 <code>JS</code> 中的函数调用来具体说明 <code>this</code> 的指向：</p>
+<h2 id="JS-中的函数调用"><a href="#JS-中的函数调用" class="headerlink" title="JS 中的函数调用"></a>JS 中的函数调用</h2><p>函数调用的方法一共有 <code>4</code> 种</p>
+<ol>
+<li>作为一个函数调用</li>
+<li>函数作为方法调用</li>
+<li>使用构造函数调用函数</li>
+<li>作为函数方法调用函数（call、apply）</li>
+</ol>
+<h3 id="作为一个函数调用"><a href="#作为一个函数调用" class="headerlink" title="作为一个函数调用"></a>作为一个函数调用</h3><p>例 1：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;windowsName&quot;</span>;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;Cherry&quot;</span>;<br><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.name);          <span class="hljs-comment">// windowsName</span><br><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;inner:&quot;</span> + <span class="hljs-built_in">this</span>);    <span class="hljs-comment">// inner: Window</span><br>&#125;<br>a();<br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;outer:&quot;</span> + <span class="hljs-built_in">this</span>)         <span class="hljs-comment">// outer: Window</span><br></code></pre></td></tr></table></figure>
+<p>这样一个最简单的函数，不属于任何一个对象，就是一个函数，这样的情况在 <code>JavaScript</code> 的在浏览器中的<code>非严格模式</code>默认是属于全局对象 <code>window</code> 的，在严格模式，就是 <code>undefined</code>。</p>
+<p>但这是一个全局的函数，很容易产生命名冲突，所以不建议这样使用。</p>
+<h3 id="函数作为方法调用"><a href="#函数作为方法调用" class="headerlink" title="函数作为方法调用"></a>函数作为方法调用</h3><p>更多的情况是将函数作为对象的方法使用。比如例 2：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;windowsName&quot;</span>;<br><span class="hljs-keyword">var</span> a = &#123;<br>    name: <span class="hljs-string">&quot;Cherry&quot;</span>,<br>    fn : <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.name);      <span class="hljs-comment">// Cherry</span><br>    &#125;<br>&#125;<br>a.fn();<br></code></pre></td></tr></table></figure>
+<p>这里定义一个对象 <code>a</code>，对象 <code>a</code> 有一个属性（<code>name</code>）和一个方法（<code>fn</code>）。</p>
+<p>然后对象 <code>a</code> 通过 <code>.</code> 方法调用了其中的 <code>fn</code> 方法。</p>
+<p>然后我们一直记住的那句话“<strong>this 永远指向最后调用它的那个对象</strong>”，所以在 <code>fn</code> 中的 <code>this</code> 就是指向 <code>a</code> 的。</p>
+<h3 id="使用构造函数调用函数"><a href="#使用构造函数调用函数" class="headerlink" title="使用构造函数调用函数"></a>使用构造函数调用函数</h3><h3 id="作为函数方法调用函数"><a href="#作为函数方法调用函数" class="headerlink" title="作为函数方法调用函数"></a>作为函数方法调用函数</h3>
             </div>
             <hr>
             <div>
@@ -272,6 +271,8 @@
                     
                       <a class="hover-with-bg" href="/tags/Javascript/">Javascript</a>
                     
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
                   </div>
                 
               </div>
@@ -283,18 +284,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/03/05/js-prototype/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JavaScript深入之从原型到原型链到继承</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/02/26/mongodb-learning-guide/">
-                        <span class="hidden-mobile">mongodb学习指南</span>
+                      <a href="/2021/03/05/js-prototype/">
+                        <span class="hidden-mobile">JavaScript深入之从原型到原型链到继承</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
